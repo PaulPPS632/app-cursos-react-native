@@ -7,18 +7,22 @@ import {
   ActivityIndicator,
   ScrollView,
   StyleSheet,
+  Pressable,
 } from "react-native";
 import { atomOneDarkReasonable } from "react-syntax-highlighter/dist/esm/styles/hljs";
 import CodeHighlighter from "react-native-code-highlighter";
 import Markdown from "react-native-markdown-display";
+import { Link } from "expo-router";
+import { styled } from "nativewind";
 
 export function Screen({ data }) {
-  const copy = `# h1 Heading 8-)
+  const copy = `# Python
 
-**This is some bold text!**
+**este es un post de python aqui aprenderas de todo**
 
-This is normal text
-Inline \`code\`
+bueno en esta primera parte aprenderas de los tipos de datos en python uno de ellos es number, tuplas, pilas, diccionarios, etc
+
+Tipo de Dato numerico \`number = 1\`
 
   Indented code
 
@@ -48,6 +52,35 @@ Inline \`code\`
   segudo: "algo"
   }
   console.log(foo(5));
+  console.log(foo(5));
+  console.log(foo(5));
+  console.log(foo(5));
+  const nuevo ={
+  dato: "nuevo",
+  segudo: "algo",
+  dato: "nuevo",
+  segudo: "algo",
+  dato: "nuevo",
+  segudo: "algo",
+  dato: "nuevo",
+  segudo: "algo",
+  dato: "nuevo",
+  segudo: "algo",
+  dato: "nuevo",
+  segudo: "algo",
+  dato: "nuevo",
+  segudo: [
+  {
+    dato:"nuevooooo"
+  },
+  {
+    dato:"nuevooooo"
+  },
+  {
+    dato:"nuevooooo"
+  },
+  ]
+  }
   \`\`\`
 `;
   const renderRules = {
@@ -55,6 +88,7 @@ Inline \`code\`
 
     code_inline: (node, children, parent, styles, inheritedStyles = {}) => {
       return (
+        <View key={node.key} style={{justifyContent:'center', backgroundColor:'#1c2b38', margin:20}}>
         <CodeHighlighter
           key={node.key}
           hljsStyle={atomOneDarkReasonable}
@@ -64,6 +98,7 @@ Inline \`code\`
         >
           {node.content}
         </CodeHighlighter>
+        </View>
       );
     },
 
@@ -78,21 +113,19 @@ Inline \`code\`
         content = node.content.substring(0, node.content.length - 1);
       }
       return (
+        <View key={node.key} style={{justifyContent:'center', backgroundColor:'#1c2b38', margin:20}}>
         <CodeHighlighter
           key={node.key}
           hljsStyle={atomOneDarkReasonable}
           containerStyle={{
             width: "100%",
             padding: 10,
-            alignItems: "center",
-            margin: 10,
-            marginRight:10
           }}
-          textStyle={styles.text}
           language={node.language || "javascript"} // Asegúrate de que el lenguaje esté disponible en el contenido
         >
           {content}
         </CodeHighlighter>
+        </View>
       );
     },
 
@@ -111,17 +144,15 @@ Inline \`code\`
       ) {
         content = node.content.substring(0, node.content.length - 1);
       }
-      content += "das";
       return (
-        <View key={node.key} style={{justifyContent:'center', backgroundColor:'#1c2b38'}}>
+        <View key={node.key} style={{justifyContent:'center', backgroundColor:'#1c2b38', margin:20, borderRadius:8}}>
           <CodeHighlighter
             key={node.key}
             hljsStyle={atomOneDarkReasonable}
             containerStyle={{
               width: "100%",
-              padding: 10,
+              padding: 15,
               alignItems: "center",
-              margin: 10
             }}
             textStyle={styles.text}
             language={node.language || "javascript"} // Asegúrate de que el lenguaje esté disponible en el contenido
@@ -135,16 +166,29 @@ Inline \`code\`
 
     // Otras reglas de renderizado
   };
+  const StyledPressable = styled(Pressable);
+  console.log(data[0].sucesor);
   return (
     <View className="bg-gray-800 h-full w-full">
       <ScrollView>
         {data[0].ScreenPosts.map((screenPost) => (
           <View className="h-full w-full" key={screenPost.id}>
-            <Text className="text-white font-bold">{screenPost.title}</Text>
-            <View className="">
-              <Markdown className="h-full bg-gray-800" rules={renderRules}>
+            <View className="m-3">
+              <Markdown style={{text:{color:'#e8e8e8'}}} rules={renderRules}>
                 {copy}
               </Markdown>
+              <View>
+                <Link  href={`/${screenPost.predecesor}`} asChild>
+                  <StyledPressable>
+                    <Text>das</Text>
+                  </StyledPressable>
+                </Link>
+                <Link  href={`/${screenPost.sucesor}`} asChild>
+                  <StyledPressable>
+                    <Text>das</Text>
+                  </StyledPressable>
+                </Link>
+              </View>
             </View>
           </View>
         ))}
