@@ -47,7 +47,7 @@ export default function Detail(){
       }
 
     return (
-      <View className="flex-1 justify-center items-center">
+      <View className="flex-1 justify-center items-center bg-gray-800">
         <Screen data={data}/>
       </View>  
     );
