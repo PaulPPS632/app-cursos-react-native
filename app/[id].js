@@ -1,6 +1,6 @@
 import { Link, useLocalSearchParams } from "expo-router";
 import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
-import { fetchScreens_ByPostId } from "../PostService.js";
+import {fetchScreen, fetchScreens_ByPostId } from "../PostService.js";
 import { useEffect, useState } from "react";
 import { Screen } from "../components/screen.jsx";
 export default function Detail(){
@@ -10,7 +10,7 @@ export default function Detail(){
     const [error, setError] = useState(null);
     useEffect(() => {
       const getData = async () => {
-        const result = await fetchScreens_ByPostId(id);
+        const result = await fetchScreen(id);
         if (result) {
           setData(result); // Suponiendo que la respuesta es un array con un solo objeto
         } else {

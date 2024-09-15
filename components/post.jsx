@@ -4,7 +4,7 @@ import { Link } from "expo-router";
 const StyledPressable = styled(Pressable);
 export default function Post({ post }) {
   return (
-    <Link href={`/${post.id}`} asChild>
+    <Link href={`/${post.first_screen}`} asChild>
       <StyledPressable className="active:opacity-70 border border-black active:border-white/50 mb-2 bg-gray-900/10 rounded-xl p-4  ">
         <View style={styles.container_cart_post} className="flex-row gap-4 bg-gray-800">
           <Image source={{ uri: post.url_picture }} style={styles.image} />

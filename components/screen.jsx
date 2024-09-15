@@ -88,16 +88,23 @@ Tipo de Dato numerico \`number = 1\`
 
     code_inline: (node, children, parent, styles, inheritedStyles = {}) => {
       return (
-        <View key={node.key} style={{justifyContent:'center', backgroundColor:'#1c2b38', margin:20}}>
-        <CodeHighlighter
+        <View
           key={node.key}
-          hljsStyle={atomOneDarkReasonable}
-          containerStyle={styles.codeContainer}
-          textStyle={styles.text}
-          language="javascript" // Puedes ajustar el lenguaje según sea necesario
+          style={{
+            justifyContent: "center",
+            backgroundColor: "#1c2b38",
+            margin: 20,
+          }}
         >
-          {node.content}
-        </CodeHighlighter>
+          <CodeHighlighter
+            key={node.key}
+            hljsStyle={atomOneDarkReasonable}
+            containerStyle={styles.codeContainer}
+            textStyle={styles.text}
+            language="javascript" // Puedes ajustar el lenguaje según sea necesario
+          >
+            {node.content}
+          </CodeHighlighter>
         </View>
       );
     },
@@ -113,18 +120,25 @@ Tipo de Dato numerico \`number = 1\`
         content = node.content.substring(0, node.content.length - 1);
       }
       return (
-        <View key={node.key} style={{justifyContent:'center', backgroundColor:'#1c2b38', margin:20}}>
-        <CodeHighlighter
+        <View
           key={node.key}
-          hljsStyle={atomOneDarkReasonable}
-          containerStyle={{
-            width: "100%",
-            padding: 10,
+          style={{
+            justifyContent: "center",
+            backgroundColor: "#1c2b38",
+            margin: 20,
           }}
-          language={node.language || "javascript"} // Asegúrate de que el lenguaje esté disponible en el contenido
         >
-          {content}
-        </CodeHighlighter>
+          <CodeHighlighter
+            key={node.key}
+            hljsStyle={atomOneDarkReasonable}
+            containerStyle={{
+              width: "100%",
+              padding: 10,
+            }}
+            language={node.language || "javascript"} // Asegúrate de que el lenguaje esté disponible en el contenido
+          >
+            {content}
+          </CodeHighlighter>
         </View>
       );
     },
@@ -145,7 +159,15 @@ Tipo de Dato numerico \`number = 1\`
         content = node.content.substring(0, node.content.length - 1);
       }
       return (
-        <View key={node.key} style={{justifyContent:'center', backgroundColor:'#1c2b38', margin:20, borderRadius:8}}>
+        <View
+          key={node.key}
+          style={{
+            justifyContent: "center",
+            backgroundColor: "#1c2b38",
+            margin: 20,
+            borderRadius: 8,
+          }}
+        >
           <CodeHighlighter
             key={node.key}
             hljsStyle={atomOneDarkReasonable}
@@ -156,7 +178,6 @@ Tipo de Dato numerico \`number = 1\`
             }}
             textStyle={styles.text}
             language={node.language || "javascript"} // Asegúrate de que el lenguaje esté disponible en el contenido
-            
           >
             {content}
           </CodeHighlighter>
@@ -167,31 +188,39 @@ Tipo de Dato numerico \`number = 1\`
     // Otras reglas de renderizado
   };
   const StyledPressable = styled(Pressable);
-  console.log(data[0].sucesor);
   return (
     <View className="bg-gray-800 h-full w-full">
       <ScrollView>
-        {data[0].ScreenPosts.map((screenPost) => (
-          <View className="h-full w-full" key={screenPost.id}>
-            <View className="m-3">
-              <Markdown style={{text:{color:'#e8e8e8'}}} rules={renderRules}>
-                {copy}
-              </Markdown>
-              <View>
-                <Link  href={`/${screenPost.predecesor}`} asChild>
+        <View className="h-full w-full" key={data.id}>
+          <View className="m-3">
+            <Markdown
+              style={{ text: { color: "#e8e8e8" } }}
+              rules={renderRules}
+            >
+              {data.content}
+            </Markdown>
+            <View className="justify-between">
+              {data.sucesor !== 0 ? <Link  href={`/${data.sucesor}`} asChild>
                   <StyledPressable>
-                    <Text>das</Text>
+                    <Text>antes</Text>
                   </StyledPressable>
-                </Link>
-                <Link  href={`/${screenPost.sucesor}`} asChild>
+                </Link> : <Link  href={`/${data.id}`} asChild>
                   <StyledPressable>
-                    <Text>das</Text>
+                    <Text>antes</Text>
                   </StyledPressable>
-                </Link>
-              </View>
+                </Link>}
+              {data.sucesor != null ? <Link  href={`/${data.sucesor}`} asChild>
+                  <StyledPressable>
+                    <Text>despues</Text>
+                  </StyledPressable>
+                </Link> : <Link  href={`/${data.id}`} asChild>
+                  <StyledPressable>
+                    <Text>despues</Text>
+                  </StyledPressable>
+                </Link>}
             </View>
           </View>
-        ))}
+        </View>
       </ScrollView>
     </View>
   );
