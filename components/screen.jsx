@@ -1,88 +1,11 @@
-import { useEffect, useState } from "react";
-import { fetchScreens_ByPostId } from "../PostService";
-import {
-  View,
-  Text,
-  Image,
-  ActivityIndicator,
-  ScrollView,
-  StyleSheet,
-  Pressable,
-} from "react-native";
+import { View, Text, ScrollView, Pressable } from "react-native";
 import { atomOneDarkReasonable } from "react-syntax-highlighter/dist/esm/styles/hljs";
 import CodeHighlighter from "react-native-code-highlighter";
 import Markdown from "react-native-markdown-display";
 import { Link } from "expo-router";
 import { styled } from "nativewind";
-
+import AntDesign from "@expo/vector-icons/AntDesign";
 export function Screen({ data }) {
-  const copy = `# Python
-
-**este es un post de python aqui aprenderas de todo**
-
-bueno en esta primera parte aprenderas de los tipos de datos en python uno de ellos es number, tuplas, pilas, diccionarios, etc
-
-Tipo de Dato numerico \`number = 1\`
-
-  Indented code
-
-      // Some comments
-      line 1 of code
-      line 2 of code
-      line 3 of code
-
-
-  Block code "fences"
-
-  \`\`\`
-  Sample text here...
-  \`\`\`
-
-  Syntax highlighting
-
-  \`\`\` js
-  var foo = function (bar) {
-    return bar++;
-  };
-  var foo = function (bar) {
-    return bar++;
-  };
-  const nuevo ={
-  dato: "nuevo",
-  segudo: "algo"
-  }
-  console.log(foo(5));
-  console.log(foo(5));
-  console.log(foo(5));
-  console.log(foo(5));
-  const nuevo ={
-  dato: "nuevo",
-  segudo: "algo",
-  dato: "nuevo",
-  segudo: "algo",
-  dato: "nuevo",
-  segudo: "algo",
-  dato: "nuevo",
-  segudo: "algo",
-  dato: "nuevo",
-  segudo: "algo",
-  dato: "nuevo",
-  segudo: "algo",
-  dato: "nuevo",
-  segudo: [
-  {
-    dato:"nuevooooo"
-  },
-  {
-    dato:"nuevooooo"
-  },
-  {
-    dato:"nuevooooo"
-  },
-  ]
-  }
-  \`\`\`
-`;
   const renderRules = {
     // Otras reglas de renderizado
 
@@ -199,25 +122,37 @@ Tipo de Dato numerico \`number = 1\`
             >
               {data.content}
             </Markdown>
-            <View className="justify-between">
-              {data.sucesor !== 0 ? <Link  href={`/${data.sucesor}`} asChild>
-                  <StyledPressable>
-                    <Text>antes</Text>
-                  </StyledPressable>
-                </Link> : <Link  href={`/${data.id}`} asChild>
-                  <StyledPressable>
-                    <Text>antes</Text>
-                  </StyledPressable>
-                </Link>}
-              {data.sucesor != null ? <Link  href={`/${data.sucesor}`} asChild>
-                  <StyledPressable>
-                    <Text>despues</Text>
-                  </StyledPressable>
-                </Link> : <Link  href={`/${data.id}`} asChild>
-                  <StyledPressable>
-                    <Text>despues</Text>
-                  </StyledPressable>
-                </Link>}
+            <View className="flex-1 flex-row justify-between mx-4 mt-10">
+              <View>
+                {data.sucesor !== 0 ? (
+                  <Link href={`/${data.sucesor}`} asChild>
+                    <StyledPressable className="text-white">
+                      <AntDesign name="caretleft" size={24} color="white" />
+                    </StyledPressable>
+                  </Link>
+                ) : (
+                  <Link href={`/${data.id}`} asChild>
+                    <StyledPressable>
+                      <AntDesign name="caretleft" size={24} color="white" />
+                    </StyledPressable>
+                  </Link>
+                )}
+              </View>
+              <View>
+                {data.sucesor != null ? (
+                  <Link href={`/${data.sucesor}`} asChild>
+                    <StyledPressable className="text-white">
+                      <AntDesign name="caretright" size={24} color="white" />
+                    </StyledPressable>
+                  </Link>
+                ) : (
+                  <Link href={`/${data.id}`} asChild>
+                    <StyledPressable>
+                      <AntDesign name="caretright" size={24} color="white" />
+                    </StyledPressable>
+                  </Link>
+                )}
+              </View>
             </View>
           </View>
         </View>
