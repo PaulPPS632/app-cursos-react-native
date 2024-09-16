@@ -52,8 +52,10 @@ export function Main() {
   }
 
   return (
-    <View className="bg-gray-800">
+    <View className="bg-gray-800 h-full">
+
       <ScrollView>
+
         {data.map((post) => (
           <Post key={post.id} post={post} />
         ))}
@@ -69,4 +71,5 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  
 });

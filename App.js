@@ -6,8 +6,8 @@ import { Main } from "./components/main";
 export default function App(){
   return (
     <SafeAreaProvider>
-      <View style={styles.container}>
-        <StatusBar style="white" />
+      <View style={styles.container} className="bg-gray-800">
+        <StatusBar style="black" />
         <Main />
       </View>
     </SafeAreaProvider>

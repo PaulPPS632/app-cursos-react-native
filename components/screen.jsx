@@ -24,7 +24,7 @@ export function Screen({ data }) {
             hljsStyle={atomOneDarkReasonable}
             containerStyle={styles.codeContainer}
             textStyle={styles.text}
-            language="javascript" // Puedes ajustar el lenguaje según sea necesario
+            language={node.sourceInfo || "python"} // Puedes ajustar el lenguaje según sea necesario
           >
             {node.content}
           </CodeHighlighter>
@@ -58,7 +58,7 @@ export function Screen({ data }) {
               width: "100%",
               padding: 10,
             }}
-            language={node.language || "javascript"} // Asegúrate de que el lenguaje esté disponible en el contenido
+            language={node.sourceInfo || "python"} // Asegúrate de que el lenguaje esté disponible en el contenido
           >
             {content}
           </CodeHighlighter>
@@ -74,6 +74,7 @@ export function Screen({ data }) {
 
     fence: (node, children, parent, styles, inheritedStyles = {}) => {
       let { content } = node;
+      console.log(node);
 
       if (
         typeof node.content === "string" &&
@@ -100,7 +101,7 @@ export function Screen({ data }) {
               alignItems: "center",
             }}
             textStyle={styles.text}
-            language={node.language || "javascript"} // Asegúrate de que el lenguaje esté disponible en el contenido
+            language={node.sourceInfo || "python"} // Asegúrate de que el lenguaje esté disponible en el contenido
           >
             {content}
           </CodeHighlighter>
@@ -124,18 +125,16 @@ export function Screen({ data }) {
             </Markdown>
             <View className="flex-1 flex-row justify-between mx-4 mt-10">
               <View>
-                {data.sucesor !== 0 ? (
-                  <Link href={`/${data.sucesor}`} asChild>
+                {data.predecesor !== 0 ? (
+                  <Link href={`/${data.predecesor}`} asChild>
                     <StyledPressable className="text-white">
                       <AntDesign name="caretleft" size={24} color="white" />
                     </StyledPressable>
                   </Link>
                 ) : (
-                  <Link href={`/${data.id}`} asChild>
-                    <StyledPressable>
-                      <AntDesign name="caretleft" size={24} color="white" />
-                    </StyledPressable>
-                  </Link>
+                  <View>
+
+                  </View>
                 )}
               </View>
               <View>
@@ -146,11 +145,9 @@ export function Screen({ data }) {
                     </StyledPressable>
                   </Link>
                 ) : (
-                  <Link href={`/${data.id}`} asChild>
-                    <StyledPressable>
-                      <AntDesign name="caretright" size={24} color="white" />
-                    </StyledPressable>
-                  </Link>
+                  <View>
+
+                  </View>
                 )}
               </View>
             </View>
@@ -160,3 +157,5 @@ export function Screen({ data }) {
     </View>
   );
 }
+
+// 1. Reolver el tipo de lenguaje para el markdon.

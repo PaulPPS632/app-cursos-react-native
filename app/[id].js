@@ -1,4 +1,4 @@
-import { Link, useLocalSearchParams } from "expo-router";
+import { Link, Stack, useLocalSearchParams } from "expo-router";
 import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
 import {fetchScreen, fetchScreens_ByPostId } from "../PostService.js";
 import { useEffect, useState } from "react";
@@ -48,6 +48,11 @@ export default function Detail(){
 
     return (
       <View className="flex-1 justify-center items-center bg-gray-800">
+        <Stack.Screen options={{ 
+          title: data.title, 
+          headerTintColor: "white",
+          headerStyle: { backgroundColor: "#111827" },
+           }} />
         <Screen data={data}/>
       </View>  
     );
