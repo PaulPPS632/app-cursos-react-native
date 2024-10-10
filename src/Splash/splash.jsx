@@ -10,9 +10,8 @@ export function Splash() {
   return (
     <View style={styles.container}>
 
-      <Stack.Screen options={{ 
-          headerShown: false 
-           }} />
+      <Stack.Screen options={{ headerShown: false }} />
+
       {/* Sección superior con imagen */}
       <View style={styles.topSection}>
         <Image source={homeImage} style={styles.image} />
@@ -25,11 +24,12 @@ export function Splash() {
         <Text style={styles.description}>
           "Empieza tu viaje en el mundo de la programación. Aprende a tu propio ritmo y con los mejores recursos diseñados para ti."
         </Text>
-        <Link href={`/home_2`} asChild>
+        <Link href={`/splash/SplashScreen2`} asChild>
           <TouchableOpacity style={styles.button} >
             <Text style={styles.buttonText}>Siguiente</Text>
           </TouchableOpacity>
         </Link>
+
         
       </View>
     </View>

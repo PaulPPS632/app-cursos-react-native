@@ -1,6 +1,6 @@
-import { Link, Stack, useLocalSearchParams } from "expo-router";
+import { Stack, useLocalSearchParams } from "expo-router";
 import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
-import {fetchScreen, fetchScreens_ByPostId } from "../PostService.js";
+import {fetchScreen } from "../PostService.js";
 import { useEffect, useState } from "react";
 import { Screen } from "../components/screen.jsx";
 export default function Detail(){

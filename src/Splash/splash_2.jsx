@@ -1,6 +1,7 @@
 import { Text, View, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import secondImage from '../../assets/4.png';
 import { Link, Stack } from "expo-router";
+
 export function Splash_2({ navigation }) {
     return (
       <View style={styles.container}>
@@ -18,7 +19,7 @@ export function Splash_2({ navigation }) {
           <Text style={styles.description}>
             "Explora contenidos detallados y bien estructurados que te ayudarán a dominar cada concepto. Aprende leyendo guías claras y comprensibles."
           </Text>
-          <Link href={`/home_3`} asChild>
+          <Link href={`/splash/SplashScreen3`} asChild>
           <TouchableOpacity style={styles.button} >
             <Text style={styles.buttonText}>Siguiente</Text>
           </TouchableOpacity>
@@ -29,6 +30,7 @@ export function Splash_2({ navigation }) {
       </View>
     );
   }
+
   const styles = StyleSheet.create({
     container: {
       flex: 1,

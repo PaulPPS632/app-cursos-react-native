@@ -1,7 +1,7 @@
 import { Text, View, Image, StyleSheet, TouchableOpacity } from 'react-native';
-
 import { Link, Stack } from "expo-router";
 import finalImage from '../../assets/2.png';
+
 export function Splash_4() {
     return (
       <View style={styles.container}>

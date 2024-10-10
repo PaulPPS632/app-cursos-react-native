@@ -1,10 +1,12 @@
-import { View, Text, ScrollView, Pressable } from "react-native";
+// _ Pantalla de Contenido de cursos:
+import { View, ScrollView, Pressable } from "react-native";
 import { atomOneDarkReasonable } from "react-syntax-highlighter/dist/esm/styles/hljs";
 import CodeHighlighter from "react-native-code-highlighter";
 import Markdown from "react-native-markdown-display";
 import { Link } from "expo-router";
 import { styled } from "nativewind";
 import AntDesign from "@expo/vector-icons/AntDesign";
+
 export function Screen({ data }) {
   const renderRules = {
     // Otras reglas de renderizado
