@@ -1,35 +1,29 @@
+// src/Splash/splash.jsx
 import React from 'react';
 import { Text, View, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { Link, Stack } from "expo-router";
-// Importa las imágenes
 import homeImage from '../../assets/logogif.webp';
-//import { styled } from 'nativewind';
-
 
 export function Splash() {
   return (
     <View style={styles.container}>
-
       <Stack.Screen options={{ headerShown: false }} />
-
-      {/* Sección superior con imagen */}
       <View style={styles.topSection}>
         <Image source={homeImage} style={styles.image} />
       </View>
-
-      {/* Sección inferior con fondo y contenido */}
       <View style={styles.bottomSection}>
         <Text style={styles.title}>Bienvenido a tu CODELEDGE</Text>
         <Text style={styles.subtitle}>Desbloquea Tu Potencial</Text>
+
         <Text style={styles.description}>
           "Empieza tu viaje en el mundo de la programación. Aprende a tu propio ritmo y con los mejores recursos diseñados para ti."
         </Text>
-        <Link href={`/splash/SplashScreen2`} asChild>
-          <TouchableOpacity style={styles.button} >
+
+        <Link href="/splash/SplashScreen2" asChild>
+          <TouchableOpacity style={styles.button}>
             <Text style={styles.buttonText}>Siguiente</Text>
           </TouchableOpacity>
         </Link>
-
         
       </View>
     </View>

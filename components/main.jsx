@@ -1,14 +1,12 @@
-// main.jsx
+// components/main.jsx
 
 import { useEffect, useState } from "react";
-import { View, Text, ActivityIndicator, ScrollView, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, ActivityIndicator, ScrollView, StyleSheet } from "react-native";
 import { fetchPosts } from "../PostService";
 import Post from "./post";
-import { Link } from "expo-router";
-import AntDesign from '@expo/vector-icons/AntDesign';
+import NavigationButtons from "../utils/navigation/NavigationButtons";
 
 export function Main() {
-  
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -52,28 +50,16 @@ export function Main() {
   }
 
   return (
+
     <View style={styles.mainContainer}>
+
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
         {data.map((post) => (
           <Post key={post.id} post={post} />
         ))}
       </ScrollView>
 
-      {/* Botones de navegación, fuera del mapa */}
-      <View style={styles.navigationButtons}>
-        <Link href="/cursos" asChild>
-          <TouchableOpacity style={styles.button}>
-            <AntDesign name="book" size={24} color="white" />
-            <Text style={styles.buttonText}>Cursos</Text>
-          </TouchableOpacity>
-        </Link>
-        <Link href="/postCurso" asChild>
-          <TouchableOpacity style={styles.button}>
-            <AntDesign name="filetext1" size={24} color="white" />
-            <Text style={styles.buttonText}>Post Curso</Text>
-          </TouchableOpacity>
-        </Link>
-      </View>
+      <NavigationButtons />
 
     </View>
   );
@@ -82,7 +68,7 @@ export function Main() {
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
-    padding: 10,
+    padding: 0,
     backgroundColor: '#333',
   },
   scrollViewContent: {
@@ -91,9 +77,10 @@ const styles = StyleSheet.create({
   navigationButtons: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    padding: 5,
-    marginTop: 10,
-    marginBottom: 20,
+    padding: 10,
+    marginTop: 20,
+    marginBottom: 1,
+    backgroundColor: '#222',
   },
   button: {
     flexDirection: 'row',
@@ -109,4 +96,3 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
 });
-

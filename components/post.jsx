@@ -30,6 +30,8 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 10,
     backgroundColor: '#333',
+    //width: 395, // Ancho
+    height: 150, // Altura 
   },
   image: {
     width: 100,
