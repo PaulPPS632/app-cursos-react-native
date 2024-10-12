@@ -1,7 +1,7 @@
 // app/cursos.js
 
 import { View } from "react-native";
-import { Main } from "../components/main";
+import { Main } from "../../components/main";
 
 export default function Cursos() {
   return (

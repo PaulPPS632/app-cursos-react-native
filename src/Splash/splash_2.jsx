@@ -5,9 +5,7 @@ import { Link, Stack } from "expo-router";
 export function Splash_2({ navigation }) {
     return (
       <View style={styles.container}>
-        <Stack.Screen options={{ 
-          headerShown: false 
-           }} />
+        <Stack.Screen options={{ headerShown: false }} />
         {/* Sección superior con imagen */}
         <View style={styles.topSection}>
           <Image source={secondImage} style={styles.image} />
@@ -19,7 +17,7 @@ export function Splash_2({ navigation }) {
           <Text style={styles.description}>
             "Explora contenidos detallados y bien estructurados que te ayudarán a dominar cada concepto. Aprende leyendo guías claras y comprensibles."
           </Text>
-          <Link href={`/splash/SplashScreen3`} asChild>
+          <Link href={`/SplashScreen3`} asChild>
           <TouchableOpacity style={styles.button} >
             <Text style={styles.buttonText}>Siguiente</Text>
           </TouchableOpacity>

@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { View, Text, ActivityIndicator, ScrollView, StyleSheet } from "react-native";
 import { fetchPosts } from "../PostService";
 import Post from "./post";
-import NavigationButtons from "../utils/navigation/NavigationButtons";
 
 export function Main() {
   const [data, setData] = useState(null);
@@ -50,16 +49,12 @@ export function Main() {
   }
 
   return (
-
     <View style={styles.mainContainer}>
-
-      <ScrollView contentContainerStyle={styles.scrollViewContent}>
+      <ScrollView contentContainerStyle={styles.scrollViewContent}>    
         {data.map((post) => (
           <Post key={post.id} post={post} />
         ))}
       </ScrollView>
-
-      <NavigationButtons />
 
     </View>
   );
@@ -73,14 +68,6 @@ const styles = StyleSheet.create({
   },
   scrollViewContent: {
     paddingBottom: 60, // Añade padding adicional en la parte inferior si es necesario
-  },
-  navigationButtons: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    padding: 10,
-    marginTop: 20,
-    marginBottom: 1,
-    backgroundColor: '#222',
   },
   button: {
     flexDirection: 'row',

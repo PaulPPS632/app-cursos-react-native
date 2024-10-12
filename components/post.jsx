@@ -9,14 +9,14 @@ export default function Post({ post }) {
   return (
     <View style={styles.container}>
       <Link href={`/${post.first_screen}`} asChild>
-        <StyledPressable className="active:opacity-70 border border-black active:border-white/50 mb-2 bg-gray-800 rounded-xl p-4">
-          <View className="flex-row gap-4 bg-gray-800">
+        <StyledPressable style={styles.pressable} className="bg-gray-800">
+          <View style={styles.innerContainer}>
             <Image source={{ uri: post.url_picture }} style={styles.image} />
-            <View className="flex-shrink">
-              <Text className="text-white font-bold">{post.title}</Text>
-              <Text className="text-white mt-2 flex-shrink">{post.description.slice(0, 100)}</Text>
-              <Text className="text-white">{post.content}</Text>
-              <Text className="text-white">{post.date}</Text>
+            <View style={styles.textContainer}>
+              <Text style={styles.title}>{post.title}</Text>
+              <Text style={styles.description}>{post.description.slice(0, 100)}</Text>
+              <Text style={styles.content}>{post.content}</Text>
+              <Text style={styles.date}>{post.date}</Text>
             </View>
           </View>
         </StyledPressable>
@@ -30,12 +30,46 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 10,
     backgroundColor: '#333',
-    //width: 395, // Ancho
-    height: 150, // Altura 
+    height: 150,
+  },
+  pressable: {
+    borderColor: 'black',
+    borderWidth: 2,
+    borderLeftWidth: 2, 
+    borderRadius: 10,
+    marginBottom: 10,
+    backgroundColor: '#2D3748', // color azul oscuro.
+    padding: 10,
+  },
+  innerContainer: {
+    flexDirection: 'row',
+    gap: 10,
   },
   image: {
     width: 100,
     height: 100,
     borderRadius: 10,
   },
+  textContainer: {
+    flexShrink: 1,
+  },
+  title: {
+    color: 'white',
+    fontWeight: 'bold',
+  },
+  description: {
+    color: 'white',
+    marginTop: 5,
+  },
+  content: {
+    color: 'white',
+  },
+  date: {
+    color: 'white',
+  },
 });
+
+
+
+
+// backgroundColor: '#333',

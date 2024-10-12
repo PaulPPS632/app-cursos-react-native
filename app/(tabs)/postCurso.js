@@ -1,4 +1,4 @@
-import PostCurso from "../components/postCurso";
+import PostCurso from "../../components/postCurso";
 
 export default function PostCursoScreen() {
   return <PostCurso />;

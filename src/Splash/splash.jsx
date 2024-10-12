@@ -19,7 +19,7 @@ export function Splash() {
           "Empieza tu viaje en el mundo de la programación. Aprende a tu propio ritmo y con los mejores recursos diseñados para ti."
         </Text>
 
-        <Link href="/splash/SplashScreen2" asChild>
+        <Link href="/SplashScreen2" asChild>
           <TouchableOpacity style={styles.button}>
             <Text style={styles.buttonText}>Siguiente</Text>
           </TouchableOpacity>

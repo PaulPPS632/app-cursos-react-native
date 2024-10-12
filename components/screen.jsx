@@ -1,4 +1,5 @@
 // _ Pantalla de Contenido de cursos:
+
 import { View, ScrollView, Pressable } from "react-native";
 import { atomOneDarkReasonable } from "react-syntax-highlighter/dist/esm/styles/hljs";
 import CodeHighlighter from "react-native-code-highlighter";

@@ -17,7 +17,7 @@ export function Splash_3({ navigation }) {
           <Text style={styles.description}>
             "Desde lo básico hasta lo avanzado, sigue tu propio camino y lleva tus habilidades al siguiente nivel con Codeledge."
           </Text>
-          <Link href={`/splash/SplashScreen4`} asChild>
+          <Link href={`/SplashScreen4`} asChild>
           <TouchableOpacity style={styles.button} >
             <Text style={styles.buttonText}>Comenzar</Text>
           </TouchableOpacity>

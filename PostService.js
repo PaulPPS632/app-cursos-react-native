@@ -2,7 +2,7 @@
 export const fetchScreens_ByPostId = async (id) => {
   try {
     const response = await fetch(
-      "http://appcursosbackexpress-production.up.railway.app/Post/Screens/"+ id,
+      "http://10.0.2.2:3000/Post/Screens/"+ id,
     );
     if (!response.ok) {
       throw new Error("Network response was not ok");
@@ -20,7 +20,7 @@ export const fetchScreen = async (id) => {
     console.log("el id entrante");
     console.log(id);
     const response = await fetch(
-      "http://appcursosbackexpress-production.up.railway.app/ScreenPost/"+ id,
+      "http://10.0.2.2:3000/ScreenPost/"+ id,
     );
     if (!response.ok) {
       throw new Error("Network response was not ok");
@@ -36,7 +36,7 @@ export const fetchScreen = async (id) => {
 export const fetchPosts= async () => {
     try {
       const response = await fetch(
-        "http://appcursosbackexpress-production.up.railway.app/Post",
+        "http://10.0.2.2:3000/Post",
       );
       if (!response.ok) {
         throw new Error("Network response was not ok");

@@ -1,13 +1,17 @@
+// Vista LECCION de los cursos:
+
 import { Stack, useLocalSearchParams } from "expo-router";
 import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
 import {fetchScreen } from "../PostService.js";
 import { useEffect, useState } from "react";
 import { Screen } from "../components/screen.jsx";
+
 export default function Detail(){
     const {id} = useLocalSearchParams();
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    
     useEffect(() => {
       const getData = async () => {
         const result = await fetchScreen(id);
@@ -48,15 +52,17 @@ export default function Detail(){
 
     return (
       <View className="flex-1 justify-center items-center bg-gray-800">
-        <Stack.Screen options={{ 
-          title: data.title, 
+        <Stack.Screen options={{  
+          headerTitle: data.title, // -> LECCION 1
           headerTintColor: "white",
+          headerBackVisible: true,
           headerStyle: { backgroundColor: "#111827" },
            }} />
         <Screen data={data}/>
       </View>  
     );
 }
+
 const styles = StyleSheet.create({
     container: {
       flex: 1,

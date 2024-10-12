@@ -2,7 +2,6 @@
 
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
-import NavigationButtons from '../utils/navigation/NavigationButtons';
 
 export default function PostCurso() {
   return (
@@ -13,8 +12,6 @@ export default function PostCurso() {
         <Text style={styles.description}>Descripción del curso...</Text>
 
       </ScrollView>
-      
-      <NavigationButtons />
 
     </View>
   );
