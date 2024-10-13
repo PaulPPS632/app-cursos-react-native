@@ -12,7 +12,7 @@ export default function Login() {
 
       {/* Encabezado personalizado */}
       <View style={styles.header}>
-        <Text style={styles.headerText}>Bienvenido a la App</Text>
+        <Text style={styles.headerText}>Bienvenido a Codeledge</Text>
       </View>
       
       <ScrollView contentContainerStyle={styles.content}>
@@ -36,7 +36,7 @@ export default function Login() {
           <Text style={styles.buttonText}>Entrar</Text>
         </TouchableOpacity>
 
-        <Text style={styles.footerText}>¿Olvidaste tu contraseña?</Text>
+        <Text style={styles.footerText}>¿Registrarse?</Text>
       </ScrollView>
     </View>
   );
