@@ -1,4 +1,4 @@
-import { Tabs } from "expo-router";
+import { Tabs, Stack } from "expo-router";
 import { HomeIcon, InfoIcon, AgregarIcon, UserIcon } from "../../utils/Icons";
 
 export default function TabsLayout() {

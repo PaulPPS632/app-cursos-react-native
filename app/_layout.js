@@ -26,6 +26,7 @@ export default function Layout() {
             ),
           }}
         />
+
       </View>
     </SafeAreaView>
   );
