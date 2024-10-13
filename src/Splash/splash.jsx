@@ -8,9 +8,11 @@ export function Splash() {
   return (
     <View style={styles.container}>
       <Stack.Screen options={{ headerShown: false }} />
+
       <View style={styles.topSection}>
         <Image source={homeImage} style={styles.image} />
       </View>
+      
       <View style={styles.bottomSection}>
         <Text style={styles.title}>Bienvenido a tu CODELEDGE</Text>
         <Text style={styles.subtitle}>Desbloquea Tu Potencial</Text>

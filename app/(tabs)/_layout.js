@@ -27,7 +27,7 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="about"
         options={{
-          title: "Nosotros",
+          title: "About",
           tabBarIcon: ({ color }) => <InfoIcon color={color} />,
         }}
       />
@@ -39,6 +39,5 @@ export default function TabsLayout() {
         }}
       />
     </Tabs>
-    
   );
 }
