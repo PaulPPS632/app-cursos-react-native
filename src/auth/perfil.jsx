@@ -1,20 +1,45 @@
-import React from 'react';
-import { Text, ScrollView, View, StyleSheet, TouchableOpacity } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { Text, ScrollView, View, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import SimpleLineIcons from '@expo/vector-icons/SimpleLineIcons'; 
-import { Link } from 'expo-router'; 
+import { Link, useRouter } from 'expo-router';
+import { getUserAndToken, clearUserAndToken } from '../../service/storageService';
 
 export default function Perfil() {
+  const [username, setUsername] = useState('');
+  const [userHandle, setUserHandle] = useState('');
+  const [avatarText, setAvatarText] = useState('');
+  const router = useRouter();
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      const { user } = await getUserAndToken();
+      if (user) {
+        setUsername(user.nombre);
+        setUserHandle(`@${user.nombre}`);
+        setAvatarText(user.nombre.charAt(0).toUpperCase());
+      }
+    };
+
+    fetchUserData();
+  }, []);
+
+  const handleLogout = async () => {
+    await clearUserAndToken();
+    Alert.alert('Sesión cerrada', 'Has cerrado sesión exitosamente');
+    router.push('/login');
+  };
+
   return (
     <View style={styles.mainContainer}>
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
         <View style={styles.profileContainer}>
           <View style={styles.avatarContainer}>
-            <Text style={styles.avatarText}>W</Text>
+            <Text style={styles.avatarText}>{avatarText || 'W'}</Text>
           </View>
           <View style={styles.userInfoContainer}>
-            <Text style={styles.username}>williams456</Text>
-            <Text style={styles.userHandle}>@williams456</Text>
+            <Text style={styles.username}>{username || 'williams456'}</Text>
+            <Text style={styles.userHandle}>{userHandle || '@williams456'}</Text>
           </View>
         </View>
 
@@ -75,7 +100,7 @@ export default function Perfil() {
 
         <View style={styles.optionsContainer}>
           <View style={styles.optionGroup}>
-            <TouchableOpacity style={styles.logoutOption}>
+            <TouchableOpacity style={styles.logoutOption} onPress={handleLogout}>
               <SimpleLineIcons name="logout" size={20} color="red" />
               <Text style={styles.logoutText}>Cerrar Sesión</Text>
             </TouchableOpacity>
@@ -153,22 +178,22 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     width: '100%',
-    justifyContent: 'flex-start', // Cambia esto
+    justifyContent: 'flex-start',
   },
   optionContent: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'flex-start', // Cambia esto
+    justifyContent: 'flex-start',
     width: '100%',
   },
   optionText: {
     fontSize: 14,
     color: '#fff',
     marginLeft: 10,
-    flex: 1, // Añade esta propiedad
+    flex: 1,
   },
   rightIcon: {
-    marginLeft: 'auto', // Asegúrate de que este estilo esté presente
+    marginLeft: 'auto',
   },
   logoutOption: {
     flexDirection: 'row',

@@ -16,11 +16,12 @@ export default function AboutInfo() {
         <Text style={styles.sectionTitle}>Quiénes somos</Text>
         <Text style={styles.text}>
           Somos un equipo apasionado de la programación, compuesto por:
+          {'\n'}
           {'\n• Paul Yeffert Perez Sanjinez'}
           {'\n• Ameli Ruth Diaz Chavez'}
           {'\n• Gianmarco Junior Toribio Alayo'}
           {'\n• Angelo Emanuel Aguilar Senador'}
-          {'\n• Williams Josede Valle Dextre'}
+          {'\n• Williams Josed Valle Dextre'}
         </Text>
 
         <Text style={styles.sectionTitle}>Nuestra misión</Text>

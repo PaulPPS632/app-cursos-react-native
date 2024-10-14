@@ -1,16 +1,52 @@
-import React from 'react';
-import { View, Text, StyleSheet, ScrollView, TextInput, TouchableOpacity, StatusBar } from 'react-native';
-import { Stack } from "expo-router";
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, ScrollView, TextInput, TouchableOpacity, StatusBar, Alert } from 'react-native';
+import { Stack, useRouter } from "expo-router";
+import { login } from '../../service/AuthService';
+import { getUserAndToken, saveUserAndToken } from '../../service/storageService';
 
 export default function Login() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [token, setToken] = useState(null);
+  const router = useRouter();  // Usar el hook useRouter
+
+  const handleLogin = async () => {
+    try {
+      const response = await login(email, password);
+
+      if (!response) {
+        Alert.alert('Error', 'No se pudo obtener una respuesta del servidor');
+        return;
+      }
+
+      const authToken = response.token;
+      const user = response.usuario;
+      console.log('Token de autenticación:', authToken);
+      console.log('Datos de respuesta:', response);
+
+      // Guardar usuario y token en AsyncStorage
+      await saveUserAndToken(response);
+
+      console.log('Usuario y token guardados correctamente', await getUserAndToken());
+
+      setToken(authToken);
+
+      Alert.alert('Éxito', 'Inicio de sesión exitoso');
+
+      // Redirigir a la pantalla de "cursos"
+      router.push('/cursos');
+    } catch (error) {
+      console.error('Error al realizar la solicitud:', error);
+      Alert.alert('Error', 'Ocurrió un error al intentar iniciar sesión');
+    }
+  };
+
   return (
     <View style={styles.container}>
       <Stack.Screen options={{ headerShown: false }} />
 
-      {/* Configurar la barra de estado */}
       <StatusBar barStyle="dark-content" backgroundColor="#f0f4f7" />
 
-      {/* Encabezado personalizado */}
       <View style={styles.header}>
         <Text style={styles.headerText}>Bienvenido a Codeledge</Text>
       </View>
@@ -18,25 +54,29 @@ export default function Login() {
       <ScrollView contentContainerStyle={styles.content}>
         <Text style={styles.title}>Iniciar Sesión</Text>
 
-        {/* Campos de texto para usuario y contraseña */}
         <TextInput 
           style={styles.input} 
           placeholder="Usuario" 
+          value={email}
+          onChangeText={setEmail}
           placeholderTextColor="#999" 
         />
         <TextInput 
           style={styles.input} 
           placeholder="Contraseña" 
+          value={password}
+          onChangeText={setPassword}
           placeholderTextColor="#999" 
           secureTextEntry 
         />
 
-        {/* Botón de login */}
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={styles.button} onPress={handleLogin}>
           <Text style={styles.buttonText}>Entrar</Text>
         </TouchableOpacity>
 
-        <Text style={styles.footerText}>¿Registrarse?</Text>
+        <TouchableOpacity onPress={() => router.push('/register')}>
+          <Text style={styles.footerText}>¿Registrarse?</Text>
+        </TouchableOpacity>
       </ScrollView>
     </View>
   );
@@ -51,8 +91,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#6C63FF',
     paddingVertical: 20,
     alignItems: 'center',
-    justifyContent: 'center',  // Centrar el contenido horizontalmente
-    paddingTop: 40,  // Ajustar espacio para la barra de estado
+    justifyContent: 'center',
+    paddingTop: 40,
   },
   headerText: {
     color: '#fff',
@@ -70,7 +110,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 20,
     color: '#333',
-    textAlign: 'center',  // Centrar el texto del título
+    textAlign: 'center',
   },
   input: {
     width: '100%',
