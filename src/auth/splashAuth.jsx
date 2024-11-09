@@ -1,10 +1,23 @@
-// src/Splash/splash.jsx
-import React from 'react';
-import { Text, View, Image, StyleSheet, TouchableOpacity, StatusBar } from 'react-native';
-import { Link, Stack } from "expo-router";
+// src/Splash/splashAuth.jsx
+import React, { useEffect } from 'react';
+import { Text, View, Image, StyleSheet, StatusBar } from 'react-native';
+import { useRouter } from 'expo-router'; // Para hacer la navegación
 import homeImage from '../../assets/logogif.webp';
+import { Stack } from "expo-router";
 
-export function Splash() {
+export default function SplashAutch() {
+  const router = useRouter();
+
+  // Espera 3 segundos y luego redirige a la pantalla de cursos
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      router.push('/cursos'); // Redirige a la pantalla de cursos
+    }, 3000); // 3 segundos
+
+    // Limpia el temporizador cuando el componente se desmonte
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <View style={styles.container}>
       <Stack.Screen options={{ headerShown: false }} />
@@ -21,20 +34,11 @@ export function Splash() {
         <Text style={styles.description}>
           "Empieza tu viaje en el mundo de la programación. Aprende a tu propio ritmo y con los mejores recursos diseñados para ti."
         </Text>
-
-        {/* <Link href="/SplashScreen2" asChild> */}
-        <Link href="/SplashScreen2" asChild>
-          <TouchableOpacity style={styles.button}>
-            <Text style={styles.buttonText}>Siguiente</Text>
-          </TouchableOpacity>
-        </Link>
-        
       </View>
     </View>
   );
 }
 
-// Estilos
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -63,35 +67,22 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 38,
     fontWeight: 'bold',
-    color: '#FFFFFF', // Texto blanco para contraste
+    color: '#FFFFFF',
     marginBottom: 10,
     textAlign: 'center',
   },
   subtitle: {
     fontSize: 24,
     fontWeight: '600',
-    color: '#FFFFFF', // Texto blanco
+    color: '#FFFFFF',
     marginBottom: 20,
     textAlign: 'center',
   },
   description: {
     fontSize: 18,
-    color: '#FFFFFF', // 
+    color: '#FFFFFF',
     textAlign: 'center',
     marginBottom: 30,
     paddingHorizontal: 10,
   },
-  button: {
-    backgroundColor: '#FFFFFF', // Botón blanco
-    paddingVertical: 15,
-    paddingHorizontal: 40,
-    borderRadius: 10,
-  },
-  buttonText: {
-    color: '#6C63FF', // Texto morado
-    fontSize: 18,
-    fontWeight: '600',
-  },
 });
-
-export default Splash;

@@ -109,7 +109,7 @@ export default function Perfil() {
       </ScrollView>
 
       <View style={styles.versionContainer}>
-        <Text style={styles.versionText}>v1.1.1</Text>
+        <Text style={styles.versionText}>v1.1.3</Text>
       </View>
     </View>
   );

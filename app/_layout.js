@@ -1,5 +1,4 @@
-// Envuelve toda la aplicación:
-
+// app/_layout.js
 import { Pressable, View, SafeAreaView, StatusBar } from "react-native";
 import { Link, Stack } from "expo-router";
 import { UserIcon } from "../utils/Icons";
@@ -7,7 +6,7 @@ import { UserIcon } from "../utils/Icons";
 export default function Layout() {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "gray" }}>
-      <StatusBar translucent backgroundColor="transparent" barStyle="light-content" />
+      <StatusBar barStyle="light-content" backgroundColor="#000" />
       <View style={{ flex: 1, paddingTop: 0 }}>
 
         <Stack
@@ -31,4 +30,3 @@ export default function Layout() {
     </SafeAreaView>
   );
 }
-

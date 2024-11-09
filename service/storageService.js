@@ -15,15 +15,15 @@ export const saveUserAndToken = async (datos) => {
 };
 
 export const getUserAndToken = async () => {
-    try {
-      const values = await AsyncStorage.multiGet([USER_KEY, TOKEN_KEY]);
-      const user = JSON.parse(values[0][1]); // Obtener y parsear el valor de 'user'
-      const token = values[1][1]; // Obtener el valor de 'token'
-      return { user, token };
-    } catch (error) {
-      console.error('Error obteniendo usuario y token:', error);
-      return null;
-    }
+  try {
+    const values = await AsyncStorage.multiGet([USER_KEY, TOKEN_KEY]);
+    const user = JSON.parse(values[0][1]); // Obtener y parsear el valor de 'user'
+    const token = values[1][1]; // Obtener el valor de 'token'
+    return { user, token };
+  } catch (error) {
+    console.error('Error obteniendo usuario y token:', error);
+    return null;
+  }
 };
 
 export const clearUserAndToken = async () => {

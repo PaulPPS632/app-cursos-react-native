@@ -45,7 +45,7 @@ export default function Login() {
     <View style={styles.container}>
       <Stack.Screen options={{ headerShown: false }} />
 
-      <StatusBar barStyle="dark-content" backgroundColor="#f0f4f7" />
+      <StatusBar barStyle="light-content" backgroundColor="#000000" />
 
       <View style={styles.header}>
         <Text style={styles.headerText}>Bienvenido a Codeledge</Text>
@@ -56,7 +56,7 @@ export default function Login() {
 
         <TextInput 
           style={styles.input} 
-          placeholder="Usuario" 
+          placeholder="Email" 
           value={email}
           onChangeText={setEmail}
           placeholderTextColor="#999" 

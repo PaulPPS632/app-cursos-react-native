@@ -17,7 +17,7 @@ export function Splash_4() {
                   "Estamos emocionados de verte crecer en tu viaje de programación. ¡Nos vemos pronto!"
                   </Text>
               </View>
-        <Link href={`/cursos`} asChild>
+        <Link href={`/login`} asChild>
           <TouchableOpacity style={styles.button} >
             <Text style={styles.buttonText}>Comenzar</Text>
           </TouchableOpacity>
