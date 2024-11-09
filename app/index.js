@@ -7,7 +7,7 @@ import { useRouter } from 'expo-router';
 
 export default function Index() {
     const [isLoading, setIsLoading] = useState(true);
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [isAuthenticated, setIsAuthenticated] = useState(null); // Cambié de false a null
     const router = useRouter();
 
     useEffect(() => {
@@ -15,17 +15,19 @@ export default function Index() {
             const { user, token } = await getUserAndToken();
             if (token) {
                 setIsAuthenticated(true);
-                router.push('/splashAuth'); // Ya autenticado.
+                router.push('/splashAuth'); // Ya autenticado
             } else {
-                router.push('/splashScreen'); // no autenticado.
+                setIsAuthenticated(false);
+                router.push('/splashScreen'); // No autenticado
             }
             setIsLoading(false);
         }
         checkAuth();
     }, []);
 
-    if (isLoading) return <SplashScreen />;
+    // Mostrar pantalla de carga solo si aún no se determinó el estado
+    if (isLoading === null) return <SplashScreen />;
 
+    // No mostrar nada adicional mientras se realiza la verificación.
     return null;
 }
-
