@@ -38,6 +38,7 @@ export const fetchPosts= async () => {
       const response = await fetch(
         "http://10.0.2.2:3000/Post",
       );
+      console.log("llama fetchPost");
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }

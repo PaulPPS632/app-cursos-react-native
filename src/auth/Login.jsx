@@ -1,45 +1,59 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TextInput, TouchableOpacity, StatusBar, Alert } from 'react-native';
 import { Stack, useRouter } from "expo-router";
-import { login } from '../../service/AuthService';
-import { getUserAndToken, saveUserAndToken } from '../../service/storageService';
-
+import { getEntidadById, login } from '../../service/AuthService';
+import { saveUserAndToken } from '../../service/storageService';
+import {  signInWithEmailAndPassword, GoogleAuthProvider, signInWithCredential  } from "firebase/auth";
+import { FIREBASE_AUTH } from '../../firebaseConfig';
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [token, setToken] = useState(null);
   const router = useRouter();  // Usar el hook useRouter
 
-  const handleLogin = async () => {
+
+  const signIn = async () => {
     try {
-      const response = await login(email, password);
+      const response = await signInWithEmailAndPassword(FIREBASE_AUTH, email,password);
+      
+      const localId = response._tokenResponse.localId;
+      const entidad = getEntidadById(localId)
 
-      if (!response) {
-        Alert.alert('Error', 'No se pudo obtener una respuesta del servidor');
-        return;
+      await saveUserAndToken({
+        ususario: entidad,
+        token: localId
+      });
+      if(response._tokenResponse.registered){
+        router.push('/cursos');
       }
-
-      const authToken = response.token;
-      const user = response.usuario;
-      console.log('Token de autenticación:', authToken);
-      console.log('Datos de respuesta:', response);
-
-      // Guardar usuario y token en AsyncStorage
-      await saveUserAndToken(response);
-
-      console.log('Usuario y token guardados correctamente', await getUserAndToken());
-
-      setToken(authToken);
-
-      Alert.alert('Éxito', 'Inicio de sesión exitoso');
-
-      // Redirigir a la pantalla de "cursos"
-      router.push('/cursos');
     } catch (error) {
-      console.error('Error al realizar la solicitud:', error);
-      Alert.alert('Error', 'Ocurrió un error al intentar iniciar sesión');
+      Alert.alert('Error', error.message);
     }
-  };
+  }
+
+  // const signInWithGoogle = async () => {
+  //   try {
+  //     await GoogleSignin.hasPlayServices();
+  //     const { idToken } = await GoogleSignin.signIn();
+  //     const googleCredential = GoogleAuthProvider.credential(idToken);
+  //     const response = await signInWithCredential(FIREBASE_AUTH, googleCredential);
+      
+  //     const localId = response.user.uid;
+  //     console.log(localId)
+  //     // const entidad = await getEntidadById(localId);
+  //     // console.log({
+  //     //   usuario: entidad,
+
+  //     // })
+  //     // await saveUserAndToken({
+  //     //   usuario: entidad,
+  //     //   token: localId
+  //     // });
+
+  //     router.push('/cursos');
+  //   } catch (error) {
+  //     Alert.alert('Error', error.message);
+  //   }
+  // }
 
   return (
     <View style={styles.container}>
@@ -70,10 +84,9 @@ export default function Login() {
           secureTextEntry 
         />
 
-        <TouchableOpacity style={styles.button} onPress={handleLogin}>
+        <TouchableOpacity style={styles.button} onPress={signIn}>
           <Text style={styles.buttonText}>Entrar</Text>
         </TouchableOpacity>
-
         <TouchableOpacity onPress={() => router.push('/register')}>
           <Text style={styles.footerText}>¿Registrarse?</Text>
         </TouchableOpacity>

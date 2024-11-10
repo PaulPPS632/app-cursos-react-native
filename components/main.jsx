@@ -13,6 +13,7 @@ export function Main() {
   useEffect(() => {
     const getData = async () => {
       const result = await fetchPosts();
+      console.log(result);
       if (result) {
         setData(result);
       } else {

@@ -2,7 +2,7 @@
 // app/index.js:
 import SplashScreen from "../src/Splash/splash";	
 import { useEffect, useState } from 'react';
-import { getUserAndToken } from '../service/storageService';
+import {  getUserAndToken } from '../service/storageService';
 import { useRouter } from 'expo-router';
 
 export default function Index() {
@@ -12,13 +12,16 @@ export default function Index() {
 
     useEffect(() => {
         async function checkAuth() {
-            const { user, token } = await getUserAndToken();
+            const {user, token} = await getUserAndToken();
+
             if (token) {
                 setIsAuthenticated(true);
+                console.log("SI authenticado")
                 router.push('/splashAuth'); // Ya autenticado
             } else {
                 setIsAuthenticated(false);
-                router.push('/splashScreen'); // No autenticado
+                console.log("NO authenticado")
+                router.push('/SplashScreen'); // No autenticado
             }
             setIsLoading(false);
         }
@@ -31,3 +34,4 @@ export default function Index() {
     // No mostrar nada adicional mientras se realiza la verificación.
     return null;
 }
+

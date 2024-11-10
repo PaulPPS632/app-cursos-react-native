@@ -27,7 +27,7 @@ export const login = async (email, password) => {
     }
 };
   
-export const createEntidad = async (nombre, apellido, email, password) => {
+export const createEntidad = async (nombre, apellido, email, localId) => {
     try {
       const response = await fetch("http://10.0.2.2:3000/entidad", {
         method: "POST",
@@ -38,7 +38,7 @@ export const createEntidad = async (nombre, apellido, email, password) => {
           nombre,
           apellido,
           email,
-          password,
+          localId,
         }),
       });
       if (!response.ok) {

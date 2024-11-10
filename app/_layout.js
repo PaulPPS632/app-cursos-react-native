@@ -14,7 +14,7 @@ export default function Layout() {
             headerTransparent: false, 
             headerStyle: { backgroundColor: "black" },
             headerTintColor: "white",
-            headerTitle: "Home", // Título fijo
+            headerTitle: "Home entrada", // Título fijo
             headerBackVisible: false,
             headerRight: () => (
               <Link href="/perfil" asChild>

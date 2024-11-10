@@ -1,4 +1,4 @@
-import Register from "../../src/auth/register";
+import Register from "../../src/auth/Register";
 
 export default function RegisterScreen() {
     return <Register />;  

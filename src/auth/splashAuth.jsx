@@ -7,7 +7,7 @@ import { Stack } from "expo-router";
 
 export default function SplashAutch() {
   const router = useRouter();
-
+  
   // Espera 3 segundos y luego redirige a la pantalla de cursos
   useEffect(() => {
     const timer = setTimeout(() => {

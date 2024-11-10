@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TextInput, TouchableOpacity, StatusBar, Alert } from 'react-native';
 import { Stack, useRouter } from "expo-router";
 import { createEntidad } from '../../service/AuthService';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { FIREBASE_AUTH } from '../../firebaseConfig';
+import { saveUserAndToken } from '../../service/storageService';
 
 export default function Register() {
   const [nombre, setNombre] = useState('');
@@ -10,27 +13,44 @@ export default function Register() {
   const [password, setPassword] = useState('');
   const router = useRouter();  // Usar el hook useRouter
 
-  const handleRegister = async () => {
+  // const handleRegister = async () => {
+  //   try {
+  //     const response = await createEntidad(nombre, apellido, email, password);
+
+  //     if (!response) {
+  //       Alert.alert('Error', 'No se pudo obtener una respuesta del servidor');
+  //       return;
+  //     }
+
+  //     console.log('Datos de respuesta:', response);
+
+  //     Alert.alert('Éxito', 'Registro exitoso');
+
+  //     // Redirigir a la pantalla de inicio de sesión
+  //     router.push('/login');
+  //   } catch (error) {
+  //     console.error('Error al realizar la solicitud:', error);
+  //     Alert.alert('Error', 'Ocurrió un error al intentar registrarse');
+  //   }
+  // };
+
+  const signUp = async () => {
     try {
-      const response = await createEntidad(nombre, apellido, email, password);
+      const response = await createUserWithEmailAndPassword(FIREBASE_AUTH, email,password);
+      
+      const localId = response._tokenResponse.localId;
+      const creado = await createEntidad(nombre, apellido, email, localId);
+      await saveUserAndToken({
+        usuario: creado.entidad,
+        token: localId
+      })
 
-      if (!response) {
-        Alert.alert('Error', 'No se pudo obtener una respuesta del servidor');
-        return;
-      }
 
-      console.log('Datos de respuesta:', response);
-
-      Alert.alert('Éxito', 'Registro exitoso');
-
-      // Redirigir a la pantalla de inicio de sesión
       router.push('/login');
     } catch (error) {
-      console.error('Error al realizar la solicitud:', error);
-      Alert.alert('Error', 'Ocurrió un error al intentar registrarse');
+      Alert.alert('Error', error.message);
     }
-  };
-
+  }
   return (
     <View style={styles.container}>
       <Stack.Screen options={{ headerShown: false }} />
@@ -74,7 +94,7 @@ export default function Register() {
           secureTextEntry 
         />
 
-        <TouchableOpacity style={styles.button} onPress={handleRegister}>
+        <TouchableOpacity style={styles.button} onPress={signUp}>
           <Text style={styles.buttonText}>Registrarse</Text>
         </TouchableOpacity>
 
