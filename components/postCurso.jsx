@@ -1,25 +1,92 @@
-import React, { useState } from 'react';
-import { View, Button, StyleSheet, ScrollView, TextInput } from 'react-native';
+import React, { useState, useEffect, useContext   } from 'react';
+import { View, Button, StyleSheet, ScrollView, TextInput, ActivityIndicator, Text, Image, TouchableOpacity } from "react-native";
 import Markdown from 'react-native-markdown-display';
 import { Picker } from '@react-native-picker/picker';
+import * as ImagePicker from 'expo-image-picker';
+import { fetchTipoPosts } from '../service/tipoPostService';
+import { createPost } from "../PostService";
 
 export default function PostCurso() {
   const [title, setTitle] = useState('');
   const [nivel, setNivel] = useState('');
   const [description, setDescription] = useState('');
-  const [markdownContent, setMarkdownContent] = useState('');
+  const [image, setImage] = useState(null);
 
-  const handlePublish = () => {
-    if (title && nivel && description && markdownContent) {
-      alert('Publicación realizada: ' + title);
-    } else {
-      alert('Por favor completa todos los campos');
+  //const [markdownContent, setMarkdownContent] = useState('');
+  const [tipoPosts, setTipoPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const cargarTipos = async () => {
+      const tipos = await fetchTipoPosts();
+      setTipoPosts(tipos);
+
+      // Inicializar `nivel` con el primer tipo si existen tipos disponibles
+      if (tipos.length > 0) {
+        setNivel(tipos[0].id);
+      }
+
+      setLoading(false);
+    };
+
+    cargarTipos();
+  }, []);
+
+  const handleSelectImage = async () => {
+    const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+  
+    if (permissionResult.granted === false) {
+      alert("Se necesita permiso para acceder a la galería.");
+      return;
     }
+  
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      quality: 1,
+    });
+  
+    if (!result.canceled) {
+      console.log("Imagen seleccionada:", result.assets[0]);
+      setImage(result.assets[0]);
+    }
+    
   };
 
+  const handlePublish = async () => {
+    if (title && nivel && description) {
+      const result = await createPost(title, nivel, description, image);
+      if (result) {
+        alert("Post creado exitosamente!");
+        // Aquí llamas una función pasada como prop o usas un contexto para notificar que hay un nuevo post
+        if (onPostCreated) {
+          onPostCreated(); // Notifica que se creó un post nuevo
+        }
+      } else {
+        alert("Error al crear el post");
+      }
+    } else {
+      alert("Por favor completa todos los campos");
+    }
+  };
+  
+
+  if (loading) {
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color="#6A1B9A" />
+        <Text>Cargando tipos de post...</Text>
+      </View>
+    );
+  }
+
   return (
-    <View style={styles.container}>
+    <View style={styles.mainContainer}>
+      
       <ScrollView contentContainerStyle={styles.content}>
+        
+        <Text style={styles.titlePortada}>Portada del Curso</Text>
+
         <TextInput
           style={styles.title}
           placeholder="Nombre del título"
@@ -33,9 +100,9 @@ export default function PostCurso() {
           style={styles.picker}
           onValueChange={(itemValue) => setNivel(itemValue)}
         >
-          <Picker.Item label="Principiante" value="principiante" />
-          <Picker.Item label="Intermedio" value="intermedio" />
-          <Picker.Item label="Avanzado" value="avanzado" />
+          {tipoPosts.map((tipo) => (
+            <Picker.Item key={tipo.id} label={tipo.descripcion} value={tipo.id} />
+          ))}
         </Picker>
 
         <TextInput
@@ -48,18 +115,14 @@ export default function PostCurso() {
           onChangeText={setDescription}
         />
 
-        <TextInput
-          style={styles.contenido}
-          placeholder="Contenido (Markdown)"
-          multiline
-          numberOfLines={10}
-          value={markdownContent}
-          placeholderTextColor="#ccc"
-          onChangeText={setMarkdownContent}
-        />
-        <Markdown style={styles.markdownContainer}>{markdownContent}</Markdown>
+        <TouchableOpacity style={styles.imageButton} onPress={handleSelectImage}>
+          <Text style={styles.imageButtonText}>Seleccionar Imagen</Text>
+        </TouchableOpacity>
+
+        {image && <Image source={{ uri: image.uri }} style={styles.imagePreview} />}
 
         <Button title="Publicar" onPress={handlePublish} color="#6A1B9A" />
+        
       </ScrollView>
 
     </View>
@@ -67,19 +130,24 @@ export default function PostCurso() {
 }
 
 const styles = StyleSheet.create({
-  container: {
+  mainContainer: {
     flex: 1,
     padding: 0,
     backgroundColor: '#333',
   },
   content: {
     flexGrow: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
     padding: 20,
   },
-  title: {
+  titlePortada: {
     fontSize: 24,
+    fontWeight: 'bold',
+    color: '#FFF',
+    textAlign: 'left',
+    marginBottom: 20, // Añade un espacio debajo del título
+  },
+  title: {
+    fontSize: 20,
     fontWeight: 'bold',
     color: '#FFF',
     marginBottom: 15,
@@ -106,6 +174,31 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 5,
   },
+  
+  imageButton: {
+    backgroundColor: "#FFF",
+    padding: 10,
+    borderRadius: 5,
+    marginBottom: 15,
+  },
+  imageButtonText: {
+    color: "#000",
+    textAlign: "center",
+    alignItems: 'center',
+  },
+  imagePreview: {
+    width: 100,
+    height: 100,
+    marginBottom: 15,
+    alignItems: 'center',
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
+
   contenido: {
     fontSize: 16,
     textAlign: 'center',
@@ -124,4 +217,5 @@ const styles = StyleSheet.create({
     color: '#FFF',
     width: '100%',
   }
+
 });

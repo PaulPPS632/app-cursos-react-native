@@ -5,6 +5,7 @@ import homeImage from '../assets/logogif.webp';
 export default function AboutInfo() {
   return (
     <View style={styles.mainContainer}>
+
       <ScrollView contentContainerStyle={styles.content}>
         <Text style={styles.title}>Sobre el Proyecto</Text>
         
@@ -47,6 +48,13 @@ const styles = StyleSheet.create({
     padding: 0,
     backgroundColor: '#333',
   },
+  content: {
+    flexGrow: 1,
+    justifyContent: 'center',
+    alignItems: 'flex-start', // Alinear el contenido al inicio
+    padding: 20,
+  },
+
   title: {
     fontSize: 24,
     fontWeight: 'bold',
@@ -62,12 +70,6 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     textAlign: 'left', // Alinear títulos a la izquierda
     width: '100%', // Para asegurar que el texto ocupe todo el ancho
-  },
-  content: {
-    flexGrow: 1,
-    justifyContent: 'center',
-    alignItems: 'flex-start', // Alinear el contenido al inicio
-    padding: 20,
   },
   text: {
     color: 'white',

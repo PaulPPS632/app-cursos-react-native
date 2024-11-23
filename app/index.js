@@ -21,7 +21,7 @@ export default function Index() {
             } else {
                 setIsAuthenticated(false);
                 console.log("NO authenticado")
-                router.push('/SplashScreen'); // No autenticado
+                router.push('/splashScreen'); // No autenticado
             }
             setIsLoading(false);
         }
