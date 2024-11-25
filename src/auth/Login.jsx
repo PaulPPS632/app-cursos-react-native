@@ -28,6 +28,7 @@ export default function Login() {
     } catch (error) {
       Alert.alert('Error', error.message);
     }
+    
   }
 
   // const signInWithGoogle = async () => {

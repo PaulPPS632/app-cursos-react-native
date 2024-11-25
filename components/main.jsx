@@ -1,31 +1,39 @@
 // components/main.jsx
-
 import { useEffect, useState } from "react";
-import { View, Text, ActivityIndicator, ScrollView, StyleSheet } from "react-native";
+import { View, Text, ActivityIndicator, ScrollView, StyleSheet, RefreshControl } from "react-native";
 import { fetchPosts } from "../PostService";
 import Post from "./post";
 
-export function Main() {
+export function Main({ refreshData }) {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
   const [error, setError] = useState(null);
+  
+  const loadData = async () => {
+    setLoading(true);
+    const result = await fetchPosts();
+    if (result) {
+      setData(result);
+    } else {
+      setError("Failed to fetch data");
+    }
+    setLoading(false);
+  };
 
+  // Cargar datos al montar el componente
   useEffect(() => {
-    const getData = async () => {
-      const result = await fetchPosts();
-      console.log(result);
-      if (result) {
-        setData(result);
-      } else {
-        setError("Failed to fetch data");
-      }
-      setLoading(false);
-    };
+    loadData();
+  }, [refreshData]);
 
-    getData();
-  }, []);
+  // Lógica para refrescar al hacer pull-to-refresh
+  const onRefresh = async () => {
+    setRefreshing(true);
+    await loadData();
+    setRefreshing(false);
+  };
 
-  if (loading) {
+  if (loading && !refreshing) {
     return (
       <View style={styles.container}>
         <ActivityIndicator size="large" color="#0000ff" />
@@ -51,14 +59,19 @@ export function Main() {
 
   return (
     <View style={styles.mainContainer}>
-      <ScrollView contentContainerStyle={styles.scrollViewContent}>    
+      <ScrollView
+        contentContainerStyle={styles.scrollViewContent}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+      >
         {data.map((post) => (
           <Post key={post.id} post={post} />
         ))}
       </ScrollView>
-
     </View>
   );
+  
 }
 
 const styles = StyleSheet.create({
@@ -68,7 +81,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#333',
   },
   scrollViewContent: {
-    paddingBottom: 60, // Añade padding adicional en la parte inferior si es necesario
+    paddingBottom: 60, 
   },
   button: {
     flexDirection: 'row',

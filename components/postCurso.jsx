@@ -1,8 +1,10 @@
+// components/postCurso.jsx
 import React, { useState, useEffect, useContext   } from 'react';
 import { View, Button, StyleSheet, ScrollView, TextInput, ActivityIndicator, Text, Image, TouchableOpacity } from "react-native";
 import Markdown from 'react-native-markdown-display';
 import { Picker } from '@react-native-picker/picker';
 import * as ImagePicker from 'expo-image-picker';
+import { useNavigation } from '@react-navigation/native'; 
 import { fetchTipoPosts } from '../service/tipoPostService';
 import { createPost } from "../PostService";
 
@@ -15,6 +17,7 @@ export default function PostCurso() {
   //const [markdownContent, setMarkdownContent] = useState('');
   const [tipoPosts, setTipoPosts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigation = useNavigation(); // Usa useNavigation
 
   useEffect(() => {
     const cargarTipos = async () => {
@@ -55,21 +58,17 @@ export default function PostCurso() {
 
   const handlePublish = async () => {
     if (title && nivel && description) {
-      const result = await createPost(title, nivel, description, image);
-      if (result) {
-        alert("Post creado exitosamente!");
-        // Aquí llamas una función pasada como prop o usas un contexto para notificar que hay un nuevo post
-        if (onPostCreated) {
-          onPostCreated(); // Notifica que se creó un post nuevo
+        const result = await createPost(title, nivel, description, image);
+        if (result) {
+            alert("Post creado exitosamente!");
+            navigation.navigate('postLeccion', { postId: result.id, onRefresh: () => setDataUpdated(true) });
+        } else {
+            alert("Error al crear el post");
         }
-      } else {
-        alert("Error al crear el post");
-      }
     } else {
-      alert("Por favor completa todos los campos");
+        alert("Por favor completa todos los campos");
     }
   };
-  
 
   if (loading) {
     return (
@@ -139,6 +138,7 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     padding: 20,
   },
+  
   titlePortada: {
     fontSize: 24,
     fontWeight: 'bold',

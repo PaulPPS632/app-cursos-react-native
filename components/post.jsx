@@ -1,3 +1,4 @@
+// components/post.jsx
 import React from 'react';
 import { Text, View, StyleSheet, Pressable, Image } from "react-native";
 import { styled } from "nativewind";
